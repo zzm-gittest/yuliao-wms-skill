@@ -1,0 +1,25 @@
+# DSH ↔ RuoYi-AI-WMS 桥接 overlay
+#
+# 用法：
+#   set DSH_WMS_BRIDGE_SECRET=<与 WMS dsh.gateway.bridge-token 一致的强随机串>
+#   pnpm dsh web --patch ./overlays/wms-dsh-bridge.yml
+#
+# 作用：在 dsh 默认 Web 服务上挂两个匿名 POST 端点（/wms-llm/chat、/wms-llm/vision），
+#       WMS 的 DshLlmClient 把模型调用 POST 过来，由 dsh 用「设置 → 模型」里
+#       配的模型执行。WMS 侧不持有任何模型 Key。
+#
+# 安全：端点 auth=anonymous 但用共享密钥（X-WMS-Bridge-Token）校验。
+#       默认值仅供本机联调；线上务必设 DSH_WMS_BRIDGE_SECRET 强随机串（>=16位），
+#       并与 WMS 的 dsh.gateway.bridge-token 保持一致。
+
+- insert:
+    - id: wms-llm-bridge
+      name: '@deepseek-ai/dsh-wms-llm-bridge'
+      config:
+        chatPath: /wms-llm/chat
+        visionPath: /wms-llm/vision
+        headerName: X-WMS-Bridge-Token
+        sharedSecret: !!js process.env.DSH_WMS_BRIDGE_SECRET ?? 'wms-dsh-local-bridge-secret-change-me'
+        maxBodyBytes: 1048576
+        maxTokens: 4096
+        timeoutMs: 90000
