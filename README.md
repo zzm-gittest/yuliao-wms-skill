@@ -94,6 +94,12 @@ overlays/wms-dsh-bridge.yml# LLM 桥 overlay（--patch 加载）
 patches/apply-wms-patch.mjs# 幂等安装补丁脚本
 ```
 
+## 联系 / 交流
+
+对接你们自己的 ERP / 进销存、插件使用问题或定制需求，欢迎扫码加微信：
+
+![微信联系](docs/screenshots/wechat-contact.jpg)
+
 ## 许可
 
 MIT。注意：本插件依赖 dsh（deepseek-harness）本体，仅作为其插件运行；
