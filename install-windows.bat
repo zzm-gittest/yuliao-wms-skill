@@ -65,7 +65,7 @@ echo ============================================
 echo Start dsh web with:
 echo   cd /d "%DSH_DIR%"
 echo   pnpm dsh web --patch ./overlays/wms-dsh-bridge.yml
-echo Then open the web UI and type /yuliao-erp in the chat box.
+echo Then open the web UI and type /yuliao-wms in the chat box.
 echo.
 pause
 exit /b 0

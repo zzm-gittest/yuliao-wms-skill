@@ -6,7 +6,7 @@
 核对预览、确认执行，全程在对话内完成，无需打开任何独立面板。
 
 ```
-你: /yuliao-erp 向牛飞冷链采购5箱苹果，每箱8元
+你: /yuliao-wms 向牛飞冷链采购5箱苹果，每箱8元
 AI: 【单据创建确认】供应商：牛飞冷链 …（下方出现可编辑预览卡片）
 你: （在卡片里改数量/单价，点【确认】）
 AI: 采购订单 CG20261124xxxx 已创建
@@ -24,7 +24,7 @@ AI: 采购订单 CG20261124xxxx 已创建
 
 ## 功能
 
-- **对话透传**：`/yuliao-erp` 后主聊天框即 WMS PC AI 助手本人，消息原样转发、回复原样转述；
+- **对话透传**：`/yuliao-wms` 后主聊天框即 WMS PC AI 助手本人，消息原样转发、回复原样转述；
 - **聊天内业务卡片**：候选商品选择（含「以上都不是」逃逸）、可编辑单据预览
   （供应商/客户/仓库下拉自选、明细行内编辑、金额自动计算）、商品创建
   （单位/分类下拉 + 旁挂「新增」内联创建，分类支持一级）、执行结果
@@ -66,7 +66,7 @@ pnpm dsh web --patch ./overlays/wms-dsh-bridge.yml
 ```
 
 `--patch` 仅用于挂载 LLM 桥端点（让 WMS 后端复用 dsh 的模型配置）；
-只使用聊天助手功能时可不带。启动后在 Web 界面聊天框输入 `/yuliao-erp`，
+只使用聊天助手功能时可不带。启动后在 Web 界面聊天框输入 `/yuliao-wms`，
 首次使用会在聊天里出现「连接 WMS」登录卡，填地址（可留空走默认）、
 账号、密码即可。
 
@@ -88,7 +88,7 @@ pnpm dsh web --patch ./overlays/wms-dsh-bridge.yml
 ## 目录结构
 
 ```
-packages/wms-ai            # 主插件：skill(/yuliao-erp) + 工具 + 登录/代理路由 + 聊天卡片 UI
+packages/wms-ai            # 主插件：skill(/yuliao-wms) + 工具 + 登录/代理路由 + 聊天卡片 UI
 packages/wms-llm-bridge    # LLM 桥插件：/wms-llm/chat、/wms-llm/vision 端点
 overlays/wms-dsh-bridge.yml# LLM 桥 overlay（--patch 加载）
 patches/apply-wms-patch.mjs# 幂等安装补丁脚本

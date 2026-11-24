@@ -1,5 +1,5 @@
 /**
- * Main-chat integration: a user-invocable skill (`/yuliao-erp`) plus a
+ * Main-chat integration: a user-invocable skill (`/yuliao-wms`) plus a
  * model-facing tool (`wms_ai_chat`).
  *
  * Relay mode: the main dsh chat IS the WMS assistant conversation. Each user
@@ -18,8 +18,8 @@ import { takePendingMessage } from './form.ts'
 import { WMS_CREDENTIAL_KEY, type WmsGrant } from './store.ts'
 import { WMS_CHAT_TOOL_NAME } from './protocol.ts'
 
-/** Skill name invoked as `/yuliao-erp` in the composer. */
-export const WMS_SKILL_NAME = 'yuliao-erp'
+/** Skill name invoked as `/yuliao-wms` in the composer. */
+export const WMS_SKILL_NAME = 'yuliao-wms'
 
 /** Tool name exposed to the model once the skill is loaded. */
 export const WMS_TOOL_NAME = WMS_CHAT_TOOL_NAME
@@ -56,7 +56,7 @@ const BT = '`'
 const SKILL_CONTENT = [
   '# WMS 业务单据助手（对话透传模式）',
   '',
-  `用户通过 ${BT}/yuliao-erp${BT} 进入 WMS 进销存单据对话（采购单、销售单、出入库等）。这个主聊天框现在就是 WMS AI 助手本人的对话界面：WMS 说什么，你就原样说什么；用户说什么，你就原样转发给 WMS。整个状态机（候选商品→单据预览→确认开单）都在 WMS 侧运行。`,
+  `用户通过 ${BT}/yuliao-wms${BT} 进入 WMS 进销存单据对话（采购单、销售单、出入库等）。这个主聊天框现在就是 WMS AI 助手本人的对话界面：WMS 说什么，你就原样说什么；用户说什么，你就原样转发给 WMS。整个状态机（候选商品→单据预览→确认开单）都在 WMS 侧运行。`,
   '',
   '## 每一轮的动作',
   '',
@@ -295,7 +295,7 @@ function chipsHint(card: unknown): string {
 export function registerAgentIntegration(ctx: Context, timeoutMs: number): void {
   ctx.effect(() => ctx.skills.register({
     name: WMS_SKILL_NAME,
-    description: '创建/处理 WMS 进销存业务单据（采购单、销售单、出库/入库等）。用户输入 /yuliao-erp 后进入单据创建对话：自然语言描述需求→选商品→核对预览→确认开单。仅在用户显式调用本 skill 时使用。',
+    description: '创建/处理 WMS 进销存业务单据（采购单、销售单、出库/入库等）。用户输入 /yuliao-wms 后进入单据创建对话：自然语言描述需求→选商品→核对预览→确认开单。仅在用户显式调用本 skill 时使用。',
     source: 'runtime' as const,
     content: SKILL_CONTENT,
     invocation: { modelInvocable: false, userInvocable: true },
@@ -306,7 +306,7 @@ export function registerAgentIntegration(ctx: Context, timeoutMs: number): void 
   // there is no embedded card in this mode.
   ctx.effect(() => ctx.tools.register(defineTool({
     name: WMS_TOOL_NAME,
-    description: 'Send one message to the connected WMS PC AI assistant and return its current state, reply and card. Use only after /yuliao-erp skill is loaded. Each call advances the document-creation state machine by one step.',
+    description: 'Send one message to the connected WMS PC AI assistant and return its current state, reply and card. Use only after /yuliao-wms skill is loaded. Each call advances the document-creation state machine by one step.',
     parameters: {
       message: {
         type: 'string',

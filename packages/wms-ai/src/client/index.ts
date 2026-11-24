@@ -30,7 +30,7 @@ export function apply(ctx: ClientContext): void {
   bindTailContext(ctx as unknown as Parameters<typeof bindTailContext>[0])
 
   // Relay mode: the main chat itself is the WMS conversation (skill
-  // `/yuliao-erp` + `wms_ai_chat` tool, host half). The turn tail renders
+  // `/yuliao-wms` + `wms_ai_chat` tool, host half). The turn tail renders
   // the latest WMS card as a table with clickable actions that send their
   // message into the conversation as the user; when the tool reports
   // AUTH_NEEDED it renders the inline WMS sign-in card instead.
